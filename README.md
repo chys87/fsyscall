@@ -8,7 +8,7 @@ Why?
 ====
 
 Very simple - I would like to have my program use the `syscall` instruction (x86-64)
-directly, rather than calling a glibc wrapper function.
+directly, instead of calling a glibc wrapper function.
 
 
 Example
@@ -17,7 +17,7 @@ Example
 "Standard" code snippet:
 
 
-    int mkchdir(char *buf) {
+    int mkchdir(const char *buf) {
             int rc = chdir(buf);
             if ((rc != 0) && (errno == ENOENT)) {
                     mkdir(buf, 0666);
@@ -28,7 +28,7 @@ Example
 
 My code snippet:
 
-    int mkchdir(char *buf) {
+    int mkchdir(const char *buf) {
             int rc = fsys_chdir(buf);
             if ((rc != 0) && fsys_errno(rc, ENOENT)) {
                     fsys_mkdir(buf, 0666);
@@ -120,7 +120,7 @@ Pros:
 Cons:
 
 * This wrapper only works for standard SysV/x86-64 ABI.  It has no effect on other platforms, and
-  is currently _broken_ with the [x32 ABI](http://en.wikipedia.org/wiki/X32_ABI).
+  is currently *broken* with the [x32 ABI](http://en.wikipedia.org/wiki/X32_ABI).
 * The performance benefit is very very tiny.
 * No supoprt for [cancellation points](http://stackoverflow.com/questions/433989/posix-cancellation-points)!
 * Not all system calls are included.  Only the ones I often use are.
@@ -137,4 +137,4 @@ Disclaimer
 I am no fan of GNU or GPL, absolutely.
 The sole reason why this repository is licensed under LGPL rather than a more permissive license
 is that my code is partially based
-on file `sysdeps/unix/sysv/linux/x86_64` in [glibc](http://www.gnu.org/software/libc/).
+on file `sysdeps/unix/sysv/linux/x86_64/sysdep.h` in [glibc](http://www.gnu.org/software/libc/).
