@@ -236,6 +236,7 @@ def_fsys(open3,open,int,3,const char *,int,int)
 def_fsys(openat3,openat,int,3,int,const char *,int)
 def_fsys(openat4,openat,int,4,int,const char *,int,int)
 def_fsys_nomem(lseek,lseek,long,3,int,long,int)
+def_fsys(mkdirat,mkdirat,int,3,int,const char *,int)
 def_fsys(connect,connect,int,3,int,const struct sockaddr *,unsigned long)
 def_fsys(read,read,long,3,int,void *,unsigned long)
 def_fsys(write,write,long,3,int,const void *,unsigned long)
@@ -415,6 +416,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_openat3 openat
 #define fsys_openat4 openat
 #define fsys_lseek lseek
+#define fsys_mkdirat mkdirat
 #define fsys_connect connect
 #define fsys_read read
 #define fsys_write write
