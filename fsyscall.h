@@ -23,7 +23,7 @@
 # error "Your compiler is not supported."
 #endif
 
-#if defined __x86_64__ && defined __LP64__ && defined __OPTIMIZE__
+#if defined __x86_64__ && defined __OPTIMIZE__
 
 #define FSYSCALL_USE 1
 
@@ -128,8 +128,8 @@
 #define FSYS_MEMORY_0
 
 #define fsys_errno(r,err) ((r) == (__typeof__(r))(-(err)))
-#define fsys_errno_val(r) (-(int)(long)(r))
-#define fsys_failure(r)	((unsigned long)(long)(r) >= -4095UL)
+#define fsys_errno_val(r) (-(int)(long long)(r))
+#define fsys_failure(r)	((unsigned long long)(long long)(r) >= -4095ULL)
 #define fsys_mmap_failed(r)	((unsigned long)(r) >= -4095UL)
 
 struct rusage;
@@ -279,6 +279,7 @@ def_fsys(wait4,wait4,int,4,int,int *,int,struct rusage *)
 def_fsys(execve,execve,int,3,const char *,char *const*,char *const *)
 def_fsys(exit_group,exit_group,int,1,int)
 
+#if defined __LP64__ // AMD64 ABI
 fsys_inline long fsys_time(long *t) {
 	long (*vtime)(long *) = (long (*)(long *)) 0xffffffffff600400ul;
 	return vtime (t);
@@ -289,6 +290,11 @@ fsys_inline int fsys_gettimeofday(struct timeval *tv, void *tz) {
 		0xffffffffff600000;
 	return vgettimeofday(tv, tz);
 }
+#else // X32 ABI
+// Call the glibc routine so that we can take advantage of VDSO
+# define fsys_time time
+# define fsys_gettimeofday gettimeofday
+#endif
 
 fsys_inline int fsys_sched_getcpu (void)
 {

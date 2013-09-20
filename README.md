@@ -119,8 +119,9 @@ Pros:
 
 Cons:
 
-* This wrapper only works for standard SysV/x86-64 ABI.  It has no effect on other platforms, and
-  is currently *broken* with the [x32 ABI](http://en.wikipedia.org/wiki/X32_ABI).
+* This wrapper only works for standard SysV/x86-64 and [x32](http://en.wikipedia.org/wiki/X32_ABI) ABIs.
+  It has no effect on other platforms or ABIs.
+  (NOTE: The x32 ABI is a new ABI for x86-64.  It is not the ABI used on 32-bit x86 systems.)
 * The performance benefit is very very tiny.
 * No supoprt for [cancellation points](http://stackoverflow.com/questions/433989/posix-cancellation-points)!
 * Not all system calls are included.  Only the ones I often use are.
