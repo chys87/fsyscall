@@ -23,7 +23,7 @@
 # error "Your compiler is not supported."
 #endif
 
-#if defined __x86_64__ && defined __OPTIMIZE__
+#if defined __x86_64__
 
 #define FSYSCALL_USE 1
 
