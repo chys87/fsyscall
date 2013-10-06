@@ -278,6 +278,9 @@ def_fsys(wait4,wait4,int,4,int,int *,int,struct rusage *)
 #define fsys_waitpid(a,b,c) fsys_wait4(a,b,c,0)
 def_fsys(execve,execve,int,3,const char *,char *const*,char *const *)
 def_fsys(exit_group,exit_group,int,1,int)
+def_fsys(mount,mount,int,5,const char *,const char *,const char *,unsigned long,const void *)
+def_fsys(umount2,umount2,int,2,const char *,int)
+def_fsys(pivot_root,pivot_root,int,2,const char *,const char *)
 
 #if defined __LP64__ // AMD64 ABI
 fsys_inline long fsys_time(long *t) {
@@ -462,5 +465,8 @@ fsys_inline void fsys__exit (int x)
 #define fsys_waitpid waitpid
 #define fsys_execve execve
 #define fsys__exit _exit
+#define fsys_mount mount
+#define fsys_umount2 umount2
+#define fsys_pivot_root pivot_root
 
 #endif
