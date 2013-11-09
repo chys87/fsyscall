@@ -270,6 +270,7 @@ def_fsys(timerfd_settime,timerfd_settime,int,4,int,int,const struct itimerspec *
 def_fsys_nomem(inotify_init,inotify_init,int,0)
 def_fsys_nomem(inotify_init1,inotify_init1,int,1,int)
 def_fsys(inotify_add_watch,inotify_add_watch,int,3,int,const char *,unsigned)
+def_fsys(inotify_rm_watch,inotify_rm_watch,int,2,int,int)
 def_fsys(nanosleep,nanosleep,int,2,const struct timespec *,struct timespec *)
 def_fsys(linkat,linkat,int,5,int,const char *,int, const char *, int)
 def_fsys(unlinkat,unlinkat,int,3,int,const char *,int)
@@ -457,6 +458,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_inotify_init inotify_init
 #define fsys_inotify_init1 inotify_init1
 #define fsys_inotify_add_watch inotify_add_watch
+#define fsys_inotify_rm_watch inotify_rm_watch
 #define fsys_nanosleep nanosleep
 #define fsys_linkat linkat
 #define fsys_unlinkat unlinkat
