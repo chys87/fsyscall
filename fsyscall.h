@@ -156,6 +156,7 @@ def_fsys_nomem(socket,socket,int,3,int,int,int)
 def_fsys(bind,bind,int,3,int,const struct sockaddr *,unsigned long)
 def_fsys_nomem(listen,listen,int,2,int,int)
 def_fsys(accept,accept,int,3,int,struct sockaddr *,unsigned long *)
+def_fsys(accept4,accept4,int,4,int,struct sockaddr *,unsigned long *,int)
 def_fsys(socketpair,socketpair,int,4,int,int,int,int*)
 def_fsys_nomem(shutdown,shutdown,int,2,int,int)
 def_fsys(setsockopt,setsockopt,int,5,int,int,int,const void *,unsigned long)
@@ -355,6 +356,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_bind bind
 #define fsys_listen listen
 #define fsys_accept accept
+#define fsys_accept4 accept4
 #define fsys_socketpair socketpair
 #define fsys_shutdown shutdown
 #define fsys_setsockopt setsockopt
