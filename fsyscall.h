@@ -24,8 +24,15 @@
 #endif
 
 #if defined __x86_64__
+# if !defined FSYSCALL_USE
+#  define FSYSCALL_USE 1
+# endif
+#else
+# undef FSYSCALL_USE
+# define FSYSCALL_USE 0
+#endif
 
-#define FSYSCALL_USE 1
+#if defined __x86_64__ && FSYSCALL_USE
 
 #include <sys/syscall.h>
 
@@ -332,7 +339,7 @@ fsys_inline void fsys__exit (int x)
 
 #else
 
-#undef FSYSCALL_USE
+#define FSYSCALL_USE 0
 
 #include <unistd.h>
 #include <sys/syscall.h>
