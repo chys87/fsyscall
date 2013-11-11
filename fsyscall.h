@@ -275,6 +275,7 @@ def_fsys(signalfd4,signalfd4,int,4,int,const void/*sigset_t*/*,unsigned long, in
 #define fsys_signalfd(a,b,c) fsys_signalfd4(a,b,_NSIG/8,c)
 def_fsys_nomem(timerfd_create,timerfd_create,int,2,int,int)
 def_fsys(timerfd_settime,timerfd_settime,int,4,int,int,const struct itimerspec *,struct itimerspec *)
+def_fsys_nomem(eventfd,eventfd2,int,2,unsigned,int)
 def_fsys_nomem(inotify_init,inotify_init,int,0)
 def_fsys_nomem(inotify_init1,inotify_init1,int,1,int)
 def_fsys(inotify_add_watch,inotify_add_watch,int,3,int,const char *,unsigned)
@@ -464,6 +465,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_signalfd signalfd
 #define fsys_timerfd_create timerfd_create
 #define fsys_timerfd_settime timerfd_settime
+#define fsys_eventfd eventfd
 #define fsys_inotify_init inotify_init
 #define fsys_inotify_init1 inotify_init1
 #define fsys_inotify_add_watch inotify_add_watch
