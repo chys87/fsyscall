@@ -234,6 +234,7 @@ def_fsys_nomem(tkill,tkill,int,2,int,int)
 def_fsys_nomem(tgkill,tgkill,int,3,int,int,int)
 def_fsys(rt_sigaction,rt_sigaction,int,4,int,const struct sigaction *,struct sigaction *,unsigned long)
 #define fsys_sigaction(a,b,c) fsys_rt_sigaction(a,b,c,_NSIG/8)
+def_fsys_nomem(alarm,alarm,int,1,int)
 def_fsys(setrlimit,setrlimit,int,2,int,const struct rlimit *)
 def_fsys(getrlimit,getrlimit,int,2,int,struct rlimit *)
 
@@ -431,6 +432,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_tkill tkill
 #define fsys_tgkill tgkill
 #define fsys_sigaction sigaction
+#define fsys_alarm alarm
 #define fsys_setrlimit setrlimit
 #define fsys_getrlimit getrlimit
 #define fsys_open2 open
