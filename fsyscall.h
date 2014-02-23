@@ -218,6 +218,7 @@ def_fsys_nomem(getuid,getuid,unsigned,0)
 def_fsys_nomem(geteuid,geteuid,unsigned,0)
 def_fsys_nomem(getgid,getgid,unsigned,0)
 def_fsys_nomem(getegid,getegid,unsigned,0)
+def_fsys_nomem(getsid,getsid,int,1,int)
 def_fsys_nomem(sched_yield,sched_yield,int,0)
 def_fsys(futex4,futex,int,4,int *,int,int,const struct timespec *)
 def_fsys(futex3,futex,int,3,int *,int,int)
@@ -416,6 +417,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_geteuid geteuid
 #define fsys_getgid getgid
 #define fsys_getegid getegid
+#define fsys_getsid getsid
 #define fsys_sched_yield sched_yield
 #define fsys_futex4(a,b,c,d) syscall(__NR_futex,a,b,c,d)
 #define fsys_futex3(a,b,c) syscall(__NR_futex,a,b,c)
