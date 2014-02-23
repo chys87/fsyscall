@@ -153,6 +153,7 @@ struct epoll_event;
 struct itimerspec;
 struct rlimit;
 struct pollfd;
+struct utimbuf;
 
 // sigaction class used by Linux kernel, different from glibc's
 struct fsys_sigaction {
@@ -218,6 +219,8 @@ def_fsys(fstatat,newfstatat,int,4,int,const char *,struct stat *,int)
 def_fsys(getrusage,getrusage,int,2,int,struct rusage *)
 def_fsys(utimensat,utimensat,int,4,int,const char *,const struct timespec *,int)
 #define fsys_futimens(a,b) fsys_utimensat(a,0,b,0)
+def_fsys(utime,utime,int,2,const char *,const struct utimbuf *)
+def_fsys(utimes,utimes,int,2,const char *,const struct timeval *)
 def_fsys(rename,rename,int,2,const char *,const char *)
 def_fsys(renameat,renameat,int,4,int,const char *,int,const char *)
 def_fsys(statfs,statfs,int,2,const char *,struct statfs *)
@@ -418,6 +421,8 @@ fsys_inline void fsys__exit (int x)
 #define fsys_getrusage getrusage
 #define fsys_utimensat utimensat
 #define fsys_futimens futimens
+#define fsys_utime utime
+#define fsys_utimes utimes
 #define fsys_sched_getcpu sched_getcpu
 #define fsys_rename rename
 #define fsys_renameat renameat
