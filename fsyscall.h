@@ -34,6 +34,7 @@
 
 #if defined __x86_64__ && FSYSCALL_USE
 
+#include <signal.h>
 #include <sys/syscall.h>
 
 // We cannot omit always_inline. At least vfork requires it.
@@ -150,9 +151,25 @@ struct iovec;
 struct msghdr;
 struct epoll_event;
 struct itimerspec;
-struct sigaction;
 struct rlimit;
 struct pollfd;
+
+// sigaction class used by Linux kernel, different from glibc's
+struct fsys_sigaction {
+#pragma push_macro("sa_handler")
+#pragma push_macro("sa_sigaction")
+#undef sa_handler
+#undef sa_sigaction
+	union {
+		void (*sa_handler)(int);
+		void (*sa_sigaction)(int, siginfo_t *, void *);
+	} __sigaction_handler;
+#pragma pop_macro("sa_handler")
+#pragma pop_macro("sa_sigaction")
+	unsigned long sa_flags;
+	void (*sa_restorer) (void);
+	sigset_t sa_mask;
+};
 
 def_fsys(uname,uname,int,1,struct utsname *)
 def_fsys(chdir,chdir,int,1,const char *)
@@ -232,7 +249,7 @@ def_fsys_nomem(setsid,setsid,int,0)
 def_fsys_nomem(kill,kill,int,2,int,int)
 def_fsys_nomem(tkill,tkill,int,2,int,int)
 def_fsys_nomem(tgkill,tgkill,int,3,int,int,int)
-def_fsys(rt_sigaction,rt_sigaction,int,4,int,const struct sigaction *,struct sigaction *,unsigned long)
+def_fsys(rt_sigaction,rt_sigaction,int,4,int,const struct fsys_sigaction *,struct fsys_sigaction *,unsigned long)
 #define fsys_sigaction(a,b,c) fsys_rt_sigaction(a,b,c,_NSIG/8)
 def_fsys_nomem(alarm,alarm,int,1,int)
 def_fsys(setrlimit,setrlimit,int,2,int,const struct rlimit *)
