@@ -202,6 +202,7 @@ def_fsys(link,link,int,2,const char *,const char *)
 def_fsys(unlink,unlink,int,1,const char *)
 def_fsys(access,access,int,2,const char *,int)
 def_fsys(readlink,readlink,long,3,const char *,char *, unsigned long)
+def_fsys(readlinkat,readlinkat,long,4,int,const char *,char *, unsigned long)
 def_fsys(chmod,chmod,int,2,const char *,int)
 def_fsys_nomem(fchmod,fchmod,int,2,int,int)
 def_fsys_nomem(readahead,readahead,long,3,int,long,unsigned long)
@@ -404,6 +405,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_unlink unlink
 #define fsys_access access
 #define fsys_readlink readlink
+#define fsys_readlinkat readlinkat
 #define fsys_chmod chmod
 #define fsys_fchmod fchmod
 #define fsys_readahead readahead
