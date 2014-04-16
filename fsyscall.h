@@ -189,6 +189,7 @@ def_fsys_nomem(ioctl_long,ioctl,int,3,int,int,long)
 def_fsys(ioctl_ptr,ioctl,int,3,int,int,void *)
 def_fsys_nomem(fcntl_void,fcntl,int,2,int,int)
 def_fsys_nomem(fcntl_long,fcntl,int,3,int,int,long)
+def_fsys_nomem(fcntl_int,fcntl,int,3,int,int,int)
 def_fsys(fcntl_ptr,fcntl,int,3,int,int,void *)
 def_fsys(fcntl_cptr,fcntl,int,3,int,int,const void *)
 def_fsys(prctl_ptr,prctl,int,2,int,void *)
@@ -282,6 +283,7 @@ def_fsys(vmsplice,vmsplice,long,4,int,const struct iovec *,unsigned long,unsigne
 def_fsys(sendto,sendto,long,6,int,const void *,unsigned long,int,const struct sockaddr *,unsigned long)
 def_fsys(sendmsg,sendmsg,long,3,int,const struct msghdr *, int)
 def_fsys(recvfrom,recvfrom,long,6,int,void *,unsigned long,int,struct sockaddr *,unsigned *)
+def_fsys(recvmsg,recvmsg,long,3,int,struct msghdr *,int)
 #define fsys_send(a,b,c,d) fsys_sendto(a,b,c,d,0,0)
 #define fsys_recv(a,b,c,d) fsys_recvfrom(a,b,c,d,0,0)
 def_fsys_nomem(fsync,fsync,int,1,int)
@@ -396,6 +398,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_ioctl_ptr ioctl
 #define fsys_fcntl_void fcntl
 #define fsys_fcntl_long fcntl
+#define fsys_fcntl_int fcntl
 #define fsys_fcntl_ptr fcntl
 #define fsys_fcntl_cptr fcntl
 #define fsys_prctl_ptr prctl
@@ -480,6 +483,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_send send
 #define fsys_sendmsg sendmsg
 #define fsys_recvfrom recvfrom
+#define fsys_recvmsg recvmsg
 #define fsys_recv recv
 #define fsys_fsync fsync
 #define fsys_fdatasync fdatasync
