@@ -318,22 +318,10 @@ def_fsys(mount,mount,int,5,const char *,const char *,const char *,unsigned long,
 def_fsys(umount2,umount2,int,2,const char *,int)
 def_fsys(pivot_root,pivot_root,int,2,const char *,const char *)
 
-#if defined __LP64__ // AMD64 ABI
-fsys_inline long fsys_time(long *t) {
-	long (*vtime)(long *) = (long (*)(long *)) 0xffffffffff600400ul;
-	return vtime (t);
-}
-
-fsys_inline int fsys_gettimeofday(struct timeval *tv, void *tz) {
-	int (*vgettimeofday)(struct timeval *, void *) = (int (*)(struct timeval *, void *))
-		0xffffffffff600000;
-	return vgettimeofday(tv, tz);
-}
-#else // X32 ABI
-// Call the glibc routine so that we can take advantage of VDSO
-# define fsys_time time
-# define fsys_gettimeofday gettimeofday
-#endif
+// vsyscall is nowadays deprecated; We should use vDSO instead, of which modern glibc
+// takes good care.
+#define fsys_time time
+#define fsys_gettimeofday gettimeofday
 
 fsys_inline int fsys_sched_getcpu (void)
 {
