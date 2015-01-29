@@ -155,6 +155,7 @@ struct itimerspec;
 struct rlimit;
 struct pollfd;
 struct utimbuf;
+struct sysinfo;
 
 // sigaction class used by Linux kernel, different from glibc's
 struct fsys_sigaction {
@@ -260,6 +261,7 @@ def_fsys(rt_sigaction,rt_sigaction,int,4,int,const struct fsys_sigaction *,struc
 def_fsys_nomem(alarm,alarm,int,1,int)
 def_fsys(setrlimit,setrlimit,int,2,int,const struct rlimit *)
 def_fsys(getrlimit,getrlimit,int,2,int,struct rlimit *)
+def_fsys(sysinfo,sysinfo,int,1,struct sysinfo *)
 
 // Glibc wrappers of many of the following syscalls do some bookkeeping related to asynchronous
 // cancelation, or attempts to support old kernels without ***at syscalls.
@@ -452,6 +454,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_alarm alarm
 #define fsys_setrlimit setrlimit
 #define fsys_getrlimit getrlimit
+#define fsys_sysinfo sysinfo
 #define fsys_open2 open
 #define fsys_open3 open
 #define fsys_openat3 openat
