@@ -262,6 +262,7 @@ def_fsys_nomem(alarm,alarm,int,1,int)
 def_fsys(setrlimit,setrlimit,int,2,int,const struct rlimit *)
 def_fsys(getrlimit,getrlimit,int,2,int,struct rlimit *)
 def_fsys(sysinfo,sysinfo,int,1,struct sysinfo *)
+def_fsys_nomem(fadvise64,fadvise64,int,4,int,__OFF64_T_TYPE,__OFF64_T_TYPE,int)
 
 // Glibc wrappers of many of the following syscalls do some bookkeeping related to asynchronous
 // cancelation, or attempts to support old kernels without ***at syscalls.
@@ -354,6 +355,10 @@ fsys_inline void fsys__exit (int x)
 #else
 # define fsys__exit _exit
 #endif
+
+fsys_inline int fsys_posix_fadvise(int fd, __OFF64_T_TYPE off, __OFF64_T_TYPE len, int advice) {
+	return -fsys_fadvise64(fd, off, len, advice);
+}
 
 #else
 
@@ -455,6 +460,7 @@ fsys_inline void fsys__exit (int x)
 #define fsys_setrlimit setrlimit
 #define fsys_getrlimit getrlimit
 #define fsys_sysinfo sysinfo
+#define fsys_posix_fadvise posix_fadvise
 #define fsys_open2 open
 #define fsys_open3 open
 #define fsys_openat3 openat
