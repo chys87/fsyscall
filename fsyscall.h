@@ -284,6 +284,7 @@ def_fsys(pread,pread64,long,4,int,void *,unsigned long, __OFF64_T_TYPE)
 def_fsys(tee,tee,long,4,int,int,unsigned long,unsigned)
 def_fsys(splice,splice,long,6,int,__OFF64_T_TYPE *,int,__OFF64_T_TYPE *,unsigned long,unsigned)
 def_fsys(vmsplice,vmsplice,long,4,int,const struct iovec *,unsigned long,unsigned int)
+def_fsys(sendfile,sendfile,long,4,int,int,__OFF64_T_TYPE *,unsigned long)
 def_fsys(sendto,sendto,long,6,int,const void *,unsigned long,int,const struct sockaddr *,unsigned long)
 def_fsys(sendmsg,sendmsg,long,3,int,const struct msghdr *, int)
 def_fsys(recvfrom,recvfrom,long,6,int,void *,unsigned long,int,struct sockaddr *,unsigned *)
@@ -477,6 +478,7 @@ fsys_inline int fsys_posix_fadvise(int fd, __OFF64_T_TYPE off, __OFF64_T_TYPE le
 #define fsys_tee tee
 #define fsys_splice splice
 #define fsys_vmsplice vmsplice
+#define fsys_sendfile sendfile
 #define fsys_sendto sendto
 #define fsys_send send
 #define fsys_sendmsg sendmsg
