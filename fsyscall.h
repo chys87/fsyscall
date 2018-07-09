@@ -144,6 +144,7 @@
 struct rusage;
 struct sockaddr;
 struct stat;
+struct statx;
 struct timespec;
 struct timeval;
 struct utsname;
@@ -220,6 +221,7 @@ def_fsys(stat,stat,int,2,const char *,struct stat*)
 def_fsys(lstat,lstat,int,2,const char *,struct stat*)
 def_fsys(fstat,fstat,int,2,int,struct stat*)
 def_fsys(fstatat,newfstatat,int,4,int,const char *,struct stat *,int)
+def_fsys(statx,statx,int,5,int,const char *,int,unsigned,struct statx *)
 def_fsys(getrusage,getrusage,int,2,int,struct rusage *)
 def_fsys(utimensat,utimensat,int,4,int,const char *,const struct timespec *,int)
 #define fsys_futimens(a,b) fsys_utimensat(a,0,b,0)
@@ -423,6 +425,7 @@ fsys_inline int fsys_posix_fadvise(int fd, __OFF64_T_TYPE off, __OFF64_T_TYPE le
 #define fsys_lstat lstat
 #define fsys_fstat fstat
 #define fsys_fstatat fstatat
+#define fsys_statx(...) syscall(__NR_statx,__VA_ARGS__)
 #define fsys_getrusage getrusage
 #define fsys_utimensat utimensat
 #define fsys_futimens futimens
