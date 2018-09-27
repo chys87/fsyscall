@@ -326,6 +326,7 @@ def_fsys(exit_group,exit_group,int,1,int)
 def_fsys(mount,mount,int,5,const char *,const char *,const char *,unsigned long,const void *)
 def_fsys(umount2,umount2,int,2,const char *,int)
 def_fsys(pivot_root,pivot_root,int,2,const char *,const char *)
+def_fsys(memfd_create,memfd_create,int,2,const char *,unsigned)
 
 // vsyscall is nowadays deprecated; We should use vDSO instead, of which modern glibc
 // takes good care.
@@ -425,7 +426,11 @@ fsys_inline int fsys_posix_fadvise(int fd, __OFF64_T_TYPE off, __OFF64_T_TYPE le
 #define fsys_lstat lstat
 #define fsys_fstat fstat
 #define fsys_fstatat fstatat
-#define fsys_statx(...) syscall(__NR_statx,__VA_ARGS__)
+#if defined __GLIBC__ && (__GLIBC__ * 100 + __GLIBC_MINOR__ >= 228)
+# define fsys_statx statx
+#else
+# define fsys_statx(...) syscall(__NR_statx,__VA_ARGS__)
+#endif
 #define fsys_getrusage getrusage
 #define fsys_utimensat utimensat
 #define fsys_futimens futimens
@@ -522,5 +527,6 @@ fsys_inline int fsys_posix_fadvise(int fd, __OFF64_T_TYPE off, __OFF64_T_TYPE le
 #define fsys_mount mount
 #define fsys_umount2 umount2
 #define fsys_pivot_root pivot_root
+#define fsys_memfd_create memfd_create
 
 #endif
